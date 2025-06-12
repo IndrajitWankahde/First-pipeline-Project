@@ -1,12 +1,32 @@
 pipeline {
-  agent {
-    docker { image 'node:16-alpine' }
-  }
-  stages {
-    stage('Test') {
-      steps {
-        sh 'node --version'
-      }
+    agent any
+
+    stages {
+        stage('Pull Apache Image') {
+            steps {
+                script {
+                    sh 'docker pull httpd:latest'
+                }
+            }
+        }
+
+        stage('Run Apache Container') {
+            steps {
+                script {
+                    sh '''
+                    docker rm -f apache-server || true
+                    docker run -d --name apache-server -p 80:80 httpd:latest
+                    '''
+                }
+            }
+        }
+
+        stage('Check Apache Container Status') {
+            steps {
+                script {
+                    sh 'docker ps -f name=apache-server'
+                }
+            }
+        }
     }
-  }
 }
