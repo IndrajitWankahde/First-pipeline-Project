@@ -36,7 +36,7 @@ pipeline {
                 }
             }
         }
-        stage('Check Apache Container Status') {
+        stage('Verify Apache Container Status') {
             steps {
                 script {
                     sh 'docker ps -f name=apache-server'
