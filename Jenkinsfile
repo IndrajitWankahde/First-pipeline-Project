@@ -28,5 +28,20 @@ pipeline {
                 }
             }
         }
+        stage('Kill Container') {
+            steps {
+                script {
+                    sh 'docker rm -f apache-server'
+
+                }
+            }
+        }
+        stage('Check Apache Container Status') {
+            steps {
+                script {
+                    sh 'docker ps -f name=apache-server'
+                }
+            }
+        }
     }
 }
