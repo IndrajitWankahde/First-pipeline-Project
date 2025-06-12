@@ -28,7 +28,7 @@ pipeline {
                 }
             }
         }
-        stage('Kill the Container') {
+        stage('Kill The Container') {
             steps {
                 script {
                     sh 'docker rm -f apache-server'
